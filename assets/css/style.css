@@ -1,11 +1,11 @@
 :root {
-  --forest: #123c3b;
-  --forest-dark: #092625;
-  --sea: #1f7a77;
-  --sand: #ead7b7;
-  --warm: #c4874a;
+  --forest: #143d34;
+  --forest-dark: #092a24;
+  --sea: #00a99a;
+  --sand: #f1dfbf;
+  --warm: #00c8b5;
   --clay: #8e4f32;
-  --cream: #fbf7ef;
+  --cream: #ffffff;
   --white: #ffffff;
   --ink: #17302f;
   --muted: #617270;
@@ -26,7 +26,7 @@ body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--ink);
-  background: var(--cream);
+  background: #fff;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
@@ -59,14 +59,14 @@ textarea {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
-  padding: 18px clamp(18px, 4vw, 56px);
+  padding: 34px clamp(28px, 6vw, 80px);
   color: var(--white);
   transition: background 180ms ease, box-shadow 180ms ease, padding 180ms ease;
 }
 
 .site-header.is-scrolled,
 .site-header.is-open {
-  background: rgba(9, 38, 37, 0.94);
+  background: rgba(0, 0, 0, 0.58);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(14px);
 }
@@ -89,20 +89,25 @@ textarea {
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.42);
+  border: 2px solid rgba(255, 255, 255, 0.92);
   border-radius: 50%;
-  color: var(--sand);
+  color: #fff;
 }
 
 .brand-text {
   white-space: nowrap;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 900;
 }
 
 .main-nav {
   display: flex;
   justify-content: center;
-  gap: clamp(14px, 2vw, 28px);
-  font-size: 0.94rem;
+  gap: clamp(28px, 5vw, 72px);
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .main-nav a {
@@ -120,7 +125,7 @@ textarea {
   justify-content: center;
   min-height: 46px;
   padding: 12px 18px;
-  border-radius: var(--radius);
+  border-radius: 6px;
   border: 1px solid transparent;
   font-weight: 800;
   line-height: 1.1;
@@ -129,12 +134,12 @@ textarea {
 
 .header-cta,
 .btn-primary {
-  background: var(--warm);
-  color: var(--forest-dark);
+  background: #009eff;
+  color: #fff;
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
   color: var(--white);
   border-color: rgba(255, 255, 255, 0.42);
 }
@@ -170,7 +175,7 @@ textarea {
 
 .hero {
   position: relative;
-  min-height: 92svh;
+  min-height: 100svh;
   display: grid;
   align-items: end;
   overflow: hidden;
@@ -180,7 +185,7 @@ textarea {
 .hero-media {
   position: absolute;
   inset: 0;
-  background-image: url("../img/hero-placeholder.svg");
+  background-image: url("../img/gruta-hero.png");
   background-position: center;
   background-size: cover;
   transform: scale(1.02);
@@ -189,15 +194,20 @@ textarea {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(9, 38, 37, 0.88), rgba(9, 38, 37, 0.48) 48%, rgba(9, 38, 37, 0.18)),
-    linear-gradient(0deg, rgba(9, 38, 37, 0.74), transparent 42%);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.04) 52%, rgba(0, 0, 0, 0.08)),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.18), transparent 42%);
 }
 
 .hero-content {
   position: relative;
-  width: min(1120px, calc(100% - 36px));
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+  align-items: center;
+  gap: clamp(34px, 8vw, 110px);
+  width: min(1220px, calc(100% - 80px));
   margin: 0 auto;
-  padding: 150px 0 96px;
+  padding: 150px 0 108px;
 }
 
 .eyebrow {
@@ -213,21 +223,26 @@ textarea {
 .section h2,
 .final-cta h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.05;
   letter-spacing: 0;
 }
 
 .hero h1 {
-  max-width: 830px;
-  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  max-width: 560px;
+  font-size: clamp(4.2rem, 7.2vw, 6.25rem);
+  font-weight: 950;
+  line-height: 0.96;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
 }
 
 .hero p:not(.eyebrow) {
-  max-width: 680px;
+  max-width: 520px;
   margin: 24px 0 0;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: #fff;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 850;
+  text-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
 }
 
 .hero-actions {
@@ -235,6 +250,51 @@ textarea {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 32px;
+}
+
+.hero-logo {
+  justify-self: end;
+  position: relative;
+  display: grid;
+  width: min(390px, 100%);
+  min-height: 220px;
+  place-items: center;
+  text-align: left;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.hero-star {
+  position: absolute;
+  left: -42px;
+  top: -12px;
+  color: #fff;
+  font-size: 11rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.hero-logo strong {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2.7rem, 4vw, 4rem);
+  line-height: 0.92;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.hero-logo small {
+  font-size: 0.55em;
+}
+
+.hero-logo em {
+  position: relative;
+  z-index: 1;
+  margin-top: -24px;
+  font-style: normal;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
 }
 
 .section {
@@ -247,31 +307,72 @@ textarea {
 }
 
 .highlights {
-  background: var(--forest-dark);
-  color: var(--white);
+  background: #fff;
+  color: var(--ink);
 }
 
 .highlights-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(255, 255, 255, 0.16);
+  gap: 16px;
+  background: transparent;
 }
 
 .highlights article {
-  padding: clamp(24px, 4vw, 42px);
-  background: var(--forest-dark);
+  position: relative;
+  min-height: 335px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #ddd;
 }
 
-.highlights span,
-.suite-card span {
-  color: var(--sand);
-  font-weight: 800;
+.highlights article::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.68), transparent 52%);
+  content: "";
 }
 
-.highlights h2 {
-  margin: 16px 0 10px;
-  font-size: 1.35rem;
+.highlights img {
+  width: 100%;
+  height: 100%;
+  min-height: 335px;
+  object-fit: cover;
+}
+
+.highlights article div {
+  position: absolute;
+  z-index: 1;
+  left: 28px;
+  right: 22px;
+  bottom: 20px;
+  color: #fff;
+}
+
+.highlights h3 {
+  margin: 0 0 6px;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.05;
+  font-weight: 950;
+  text-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+}
+
+.highlights p {
+  max-width: 310px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.95rem;
+}
+
+.centered-heading {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.centered-heading h2 {
+  color: #292929;
+  font-size: clamp(2rem, 3.2vw, 2.55rem);
+  font-weight: 950;
 }
 
 .split-grid,
@@ -589,7 +690,7 @@ textarea {
 
   .hero-content {
     width: min(1280px, calc(100% - 96px));
-    padding-bottom: 112px;
+    padding-bottom: 118px;
   }
 
   .suite-grid {
@@ -601,7 +702,7 @@ textarea {
   .site-header {
     grid-template-columns: auto auto;
     gap: 14px;
-    padding: 14px 18px;
+    padding: 18px;
   }
 
   .menu-toggle {
@@ -653,17 +754,42 @@ textarea {
   }
 
   .hero {
-    min-height: 760px;
+    min-height: 100svh;
   }
 
   .hero-content {
-    padding-top: 132px;
-    padding-bottom: 72px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    width: min(100% - 42px, 760px);
+    gap: 26px;
+    padding-top: 126px;
+    padding-bottom: 68px;
+    text-align: center;
   }
 
   .hero h1 {
-    max-width: 760px;
-    font-size: clamp(3rem, 8vw, 4.8rem);
+    max-width: 720px;
+    font-size: clamp(4rem, 10vw, 5.5rem);
+  }
+
+  .hero p:not(.eyebrow) {
+    margin-inline: auto;
+    font-size: clamp(1.45rem, 3.8vw, 2rem);
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-logo {
+    justify-self: center;
+    width: min(360px, 100%);
+  }
+
+  .hero-star {
+    left: -32px;
+    top: -4px;
+    font-size: 9.2rem;
   }
 
   .gallery-grid {
@@ -697,31 +823,36 @@ textarea {
   }
 
   .brand-text {
-    max-width: 142px;
+    max-width: 132px;
     white-space: normal;
     line-height: 1.05;
     font-size: 0.95rem;
   }
 
   .hero {
-    min-height: 720px;
+    min-height: 100svh;
   }
 
   .hero-content {
-    width: min(100% - 28px, 860px);
-    padding-top: 124px;
-    padding-bottom: 44px;
+    width: min(100% - 34px, 520px);
+    gap: 24px;
+    padding-top: 96px;
+    padding-bottom: 58px;
   }
 
   .hero h1 {
-    font-size: clamp(2.28rem, 11vw, 2.9rem);
-    line-height: 1.02;
+    max-width: 340px;
+    margin-inline: auto;
+    font-size: clamp(3rem, 13vw, 3.85rem);
+    line-height: 0.96;
   }
 
   .hero p:not(.eyebrow) {
+    max-width: 330px;
     margin-top: 18px;
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: clamp(1.32rem, 6.2vw, 1.72rem);
+    line-height: 1.25;
+    font-weight: 850;
   }
 
   .hero-actions,
@@ -731,7 +862,7 @@ textarea {
 
   .hero-actions {
     gap: 10px;
-    margin-top: 24px;
+    margin-top: 26px;
   }
 
   .btn {
@@ -765,7 +896,16 @@ textarea {
   }
 
   .highlights article {
-    padding: 24px 20px;
+    min-height: 260px;
+  }
+
+  .highlights img {
+    min-height: 260px;
+  }
+
+  .highlights article div {
+    left: 20px;
+    right: 20px;
   }
 
   .feature-grid img {
@@ -842,19 +982,40 @@ textarea {
     min-height: 50px;
     padding: 8px 12px 8px 8px;
   }
+
+  .hero-logo {
+    min-height: 160px;
+    width: min(310px, 92%);
+  }
+
+  .hero-logo strong {
+    font-size: clamp(2.55rem, 12vw, 3.2rem);
+  }
+
+  .hero-logo em {
+    margin-top: -10px;
+    font-size: 0.75rem;
+  }
+
+  .hero-star {
+    left: -14px;
+    top: -12px;
+    font-size: 7.8rem;
+  }
 }
 
 @media (max-width: 430px) {
   .hero {
-    min-height: 700px;
+    min-height: 100svh;
   }
 
   .hero h1 {
-    font-size: 2.38rem;
+    max-width: 330px;
+    font-size: 3.05rem;
   }
 
   .hero-media {
-    background-position: 56% center;
+    background-position: 53% center;
   }
 }
 
@@ -870,11 +1031,17 @@ textarea {
   }
 
   .hero {
-    min-height: 680px;
+    min-height: 100svh;
   }
 
   .hero h1 {
-    font-size: 2.18rem;
+    max-width: 310px;
+    font-size: 2.9rem;
+  }
+
+  .hero p:not(.eyebrow) {
+    max-width: 300px;
+    font-size: 1.42rem;
   }
 
   .eyebrow {
