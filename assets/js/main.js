@@ -70,6 +70,15 @@
     return parts.join("\n");
   }
 
+  function setButtonText(button, text) {
+    const label = button.querySelector("span");
+    if (label) {
+      label.textContent = text;
+      return;
+    }
+    button.textContent = text;
+  }
+
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     const message = link.dataset.message || "Olá! Vim pelo site da Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
@@ -115,7 +124,7 @@
         }
 
         submitButton.disabled = true;
-        submitButton.textContent = "Enviando...";
+        setButtonText(submitButton, "Enviando...");
         setStatus("success", "Salvando seu interesse...");
 
         await saveSiteLead(payload);
@@ -127,7 +136,7 @@
         setStatus("error", error.message || "Não foi possível enviar. Tente novamente pelo WhatsApp.");
       } finally {
         submitButton.disabled = false;
-        submitButton.textContent = "Enviar e abrir WhatsApp";
+        setButtonText(submitButton, "Enviar e abrir WhatsApp");
       }
     });
   }
