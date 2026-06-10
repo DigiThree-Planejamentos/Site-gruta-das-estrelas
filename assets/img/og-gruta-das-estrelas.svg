@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#123c3b"/>
+  <path d="M0 400c170-60 310-35 480-92 230-76 450-58 720-18v340H0z" fill="#1f7a77"/>
+  <path d="M0 474c260 50 520 45 780 0 170-30 300-28 420-8v164H0z" fill="#ead7b7"/>
+  <text x="70" y="190" font-family="Georgia" font-size="78" fill="#fbf7ef">Gruta das Estrelas</text>
+  <text x="74" y="260" font-family="Arial" font-size="34" fill="#ead7b7">Restaurante e suítes no Saco do Céu</text>
+</svg>

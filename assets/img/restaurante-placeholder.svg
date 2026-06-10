@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <rect width="900" height="700" fill="#f3eadb"/>
+  <rect y="360" width="900" height="340" fill="#1f7a77"/>
+  <path d="M90 315h520v120H90z" fill="#8e4f32"/>
+  <path d="M120 245h460l95 70H60z" fill="#c4874a"/>
+  <circle cx="740" cy="150" r="68" fill="#ead7b7"/>
+  <text x="72" y="620" font-family="Arial" font-size="28" fill="#123c3b">Placeholder restaurante - trocar por foto real</text>
+</svg>
