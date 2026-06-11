@@ -58,7 +58,7 @@
 
   function buildLeadMessage(payload) {
     const parts = [
-      "Olá! Vim pelo site da Gruta das Estrelas.",
+      "Olá! Vim pelo site do Gruta das Estrelas.",
       `Nome: ${payload.name}`,
       `Interesse: ${payload.interest_type}`
     ];
@@ -71,7 +71,7 @@
   }
 
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
-    const message = link.dataset.message || "Olá! Vim pelo site da Gruta das Estrelas.";
+    const message = link.dataset.message || "Olá! Vim pelo site do Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
     link.setAttribute("target", "_blank");
     link.setAttribute("rel", "noopener noreferrer");

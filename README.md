@@ -1,6 +1,6 @@
 # Gruta das Estrelas
 
-Site institucional estático da Gruta das Estrelas, restaurante e hospedagem no Saco do Céu, Ilha Grande, Angra dos Reis.
+Site institucional estático do Gruta das Estrelas, restaurante e hospedagem no Saco do Céu, Ilha Grande, Angra dos Reis.
 
 O projeto usa HTML, CSS e JavaScript puro, sem frameworks. O formulário de interesse envia leads para o Supabase e, após salvar com sucesso, abre o WhatsApp com uma mensagem automática.
 
@@ -88,7 +88,7 @@ Supabase Dashboard > Project Settings > API > Project API keys > anon public
 
 Importante: use apenas a chave `anon` pública no frontend. Nunca use `service_role` no navegador.
 
-## 4. Configurar CLIENT_ID da Gruta das Estrelas
+## 4. Configurar CLIENT_ID do Gruta das Estrelas
 
 No arquivo:
 
@@ -160,7 +160,7 @@ Os campos enviados são:
 - `source`
 - `page_url`
 
-Os leads da Gruta das Estrelas podem ser consultados pela view:
+Os leads do Gruta das Estrelas podem ser consultados pela view:
 
 ```text
 public.gruta_leads
@@ -220,7 +220,7 @@ Na pasta do projeto, rode:
 ```bash
 git init
 git add .
-git commit -m "Cria site institucional da Gruta das Estrelas"
+git commit -m "Cria site institucional do Gruta das Estrelas"
 ```
 
 Crie um repositório vazio no GitHub e conecte o remoto:
@@ -265,7 +265,7 @@ Os arquivos `robots.txt` e `sitemap.xml` também estão na raiz para indexação
 
 Os arquivos em `assets/img/` são placeholders SVG.
 
-Troque pelas imagens reais da Gruta das Estrelas mantendo os mesmos nomes ou atualize os caminhos em:
+Troque pelas imagens reais do Gruta das Estrelas mantendo os mesmos nomes ou atualize os caminhos em:
 
 ```text
 index.html
