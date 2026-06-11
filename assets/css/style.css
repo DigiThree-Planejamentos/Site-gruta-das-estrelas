@@ -232,6 +232,8 @@ textarea {
 }
 
 .restaurant {
+  padding-top: clamp(40px, 5vw, 72px);
+  padding-bottom: clamp(40px, 5vw, 72px);
   background: var(--color-bg);
 }
 
@@ -518,6 +520,8 @@ textarea {
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: var(--color-surface-soft);
+  box-shadow: var(--shadow-soft);
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .highlights article::after {
@@ -526,6 +530,19 @@ textarea {
   background:
     linear-gradient(180deg, rgba(10, 24, 23, 0.16) 0%, rgba(10, 24, 23, 0.34) 45%, rgba(10, 24, 23, 0.82) 100%);
   content: "";
+  transition: background 220ms ease;
+}
+
+.highlights article:hover,
+.highlights article:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 42px rgba(21, 53, 47, 0.16);
+}
+
+.highlights article:hover::after,
+.highlights article:focus-within::after {
+  background:
+    linear-gradient(180deg, rgba(10, 24, 23, 0.24) 0%, rgba(10, 24, 23, 0.48) 45%, rgba(10, 24, 23, 0.9) 100%);
 }
 
 .highlights img {
@@ -534,6 +551,12 @@ textarea {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center bottom;
+  transition: transform 260ms ease;
+}
+
+.highlights article:hover img,
+.highlights article:focus-within img {
+  transform: scale(1.035);
 }
 
 .highlights article div {
@@ -1129,6 +1152,11 @@ textarea {
 
   .section {
     padding: var(--space-section-sm) 0;
+  }
+
+  .restaurant {
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   .section-header {
