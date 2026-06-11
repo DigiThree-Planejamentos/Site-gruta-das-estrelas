@@ -160,59 +160,21 @@
             <p class="section-description">Escolha sua suíte e consulte disponibilidade direto pelo WhatsApp.</p>
           </div>
 
-          <div class="suite-grid">
-            <article class="suite-card">
-              <img src="assets/img/suite-brisa-do-mar-placeholder.svg" alt="Placeholder da suíte Brisa do Mar" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Brisa do Mar</h3>
-                <p>Suíte acolhedora para quem quer acordar perto da brisa e do ritmo calmo da ilha.</p>
-                <span class="suite-tags">Vista • Ar-condicionado • Wi-Fi</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Brisa do Mar.">Consultar disponibilidade</a>
-              </div>
-            </article>
-            <article class="suite-card">
-              <img src="assets/img/suite-canto-dos-caranguejos-placeholder.svg" alt="Placeholder da suíte Canto dos Caranguejos" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Canto dos Caranguejos</h3>
-                <p>Uma opção charmosa para descansar depois de um dia de mar, trilhas e gastronomia.</p>
-                <span class="suite-tags">Conforto • Café da manhã • Wi-Fi</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Canto dos Caranguejos.">Consultar disponibilidade</a>
-              </div>
-            </article>
-            <article class="suite-card">
-              <img src="assets/img/suite-horizonte-verde-placeholder.svg" alt="Placeholder da suíte Horizonte Verde" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Horizonte Verde</h3>
-                <p>Suíte para contemplar a mata e aproveitar uma estadia tranquila no Saco do Céu.</p>
-                <span class="suite-tags">Natureza • Ar-condicionado • Banho privativo</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Horizonte Verde.">Consultar disponibilidade</a>
-              </div>
-            </article>
-            <article class="suite-card">
-              <img src="assets/img/suite-ceu-da-ilha-placeholder.svg" alt="Placeholder da suíte Céu da Ilha" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Céu da Ilha</h3>
-                <p>Hospedagem pensada para dias especiais, com atmosfera intimista e contato com a natureza.</p>
-                <span class="suite-tags">Casal • Vista • Café da manhã</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Céu da Ilha.">Consultar disponibilidade</a>
-              </div>
-            </article>
-            <article class="suite-card">
-              <img src="assets/img/suite-flor-da-ilha-placeholder.svg" alt="Placeholder da suíte Flor da Ilha" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Flor da Ilha</h3>
-                <p>Suíte leve e confortável para relaxar com praticidade durante a estadia em Ilha Grande.</p>
-                <span class="suite-tags">Conforto • Wi-Fi • Banheiro privativo</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Flor da Ilha.">Consultar disponibilidade</a>
-              </div>
-            </article>
-            <article class="suite-card">
-              <img src="assets/img/suite-florescer-placeholder.svg" alt="Placeholder da suíte Florescer" width="700" height="525" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="card-title">Florescer</h3>
-                <p>Uma suíte para quem procura descanso, privacidade e dias de conexão com a ilha.</p>
-                <span class="suite-tags">Privacidade • Café da manhã • Ar-condicionado</span>
-                <a class="btn btn-secondary" href="#" data-whatsapp-link data-message="Olá! Quero consultar disponibilidade da suíte Florescer.">Consultar disponibilidade</a>
+          <div class="suite-explorer" data-suite-explorer>
+            <div class="suite-list" role="tablist" aria-label="Suítes disponíveis" data-suite-list></div>
+
+            <article class="suite-detail" id="suite-detail-panel" role="tabpanel" aria-live="polite" data-suite-panel>
+              <img data-suite-image src="assets/img/suite-brisa-do-mar-placeholder.svg" alt="Placeholder da suíte Brisa do Mar" width="900" height="620" loading="lazy" decoding="async" />
+              <div class="suite-detail__body">
+                <h3 class="card-title" data-suite-name>Brisa do Mar</h3>
+                <p data-suite-description>Suíte acolhedora para quem quer acordar perto da brisa e do ritmo calmo da Ilha Grande.</p>
+                <ul class="suite-attributes" data-suite-attributes>
+                  <li>Vista para o ambiente natural</li>
+                  <li>Café da manhã incluso</li>
+                  <li>Banheiro privativo</li>
+                  <li>Ideal para casal</li>
+                </ul>
+                <a class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer" data-suite-cta data-message="Olá! Quero consultar disponibilidade da suíte Brisa do Mar.">Consultar disponibilidade</a>
               </div>
             </article>
           </div>

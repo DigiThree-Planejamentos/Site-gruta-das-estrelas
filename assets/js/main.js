@@ -70,12 +70,138 @@
     return parts.join("\n");
   }
 
+  const suites = [
+    {
+      name: "Brisa do Mar",
+      description: "Suíte acolhedora para quem quer acordar perto da brisa e do ritmo calmo da Ilha Grande.",
+      attributes: ["Vista para o ambiente natural", "Café da manhã incluso", "Banheiro privativo", "Ideal para casal"],
+      image: "assets/img/suite-brisa-do-mar-placeholder.svg"
+    },
+    {
+      name: "Canto dos Caranguejos",
+      description: "Uma opção charmosa para descansar depois de um dia de mar, trilhas e gastronomia.",
+      attributes: ["Ambiente aconchegante", "Café da manhã incluso", "Banheiro privativo", "Próxima à natureza"],
+      image: "assets/img/suite-canto-dos-caranguejos-placeholder.svg"
+    },
+    {
+      name: "Horizonte Verde",
+      description: "Suíte para contemplar a mata e aproveitar uma estadia tranquila no Saco do Céu.",
+      attributes: ["Vista para o verde", "Café da manhã incluso", "Banheiro privativo", "Atmosfera relaxante"],
+      image: "assets/img/suite-horizonte-verde-placeholder.svg"
+    },
+    {
+      name: "Céu da Ilha",
+      description: "Hospedagem pensada para dias especiais, com atmosfera intimista e contato com a natureza.",
+      attributes: ["Ambiente reservado", "Café da manhã incluso", "Banheiro privativo", "Ideal para descanso"],
+      image: "assets/img/suite-ceu-da-ilha-placeholder.svg"
+    },
+    {
+      name: "Flor da Ilha",
+      description: "Suíte leve e confortável para relaxar com praticidade durante a estadia na Ilha Grande.",
+      attributes: ["Conforto", "Wi-Fi", "Café da manhã incluso", "Banheiro privativo"],
+      image: "assets/img/suite-flor-da-ilha-placeholder.svg"
+    },
+    {
+      name: "Florescer",
+      description: "Uma suíte para quem procura descanso, privacidade e dias de conexão com a ilha.",
+      attributes: ["Privacidade", "Café da manhã incluso", "Ar-condicionado", "Banheiro privativo"],
+      image: "assets/img/suite-florescer-placeholder.svg"
+    }
+  ];
+
+  function setupSuiteExplorer() {
+    const explorer = document.querySelector("[data-suite-explorer]");
+    if (!explorer) return;
+
+    const list = explorer.querySelector("[data-suite-list]");
+    const panel = explorer.querySelector("[data-suite-panel]");
+    const image = explorer.querySelector("[data-suite-image]");
+    const name = explorer.querySelector("[data-suite-name]");
+    const description = explorer.querySelector("[data-suite-description]");
+    const attributes = explorer.querySelector("[data-suite-attributes]");
+    const cta = explorer.querySelector("[data-suite-cta]");
+
+    if (!list || !panel || !image || !name || !description || !attributes || !cta) return;
+
+    let activeIndex = 0;
+    let transitionTimer;
+
+    function renderSuite(index) {
+      const suite = suites[index];
+      if (!suite) return;
+
+      activeIndex = index;
+      window.clearTimeout(transitionTimer);
+      panel.classList.add("is-changing");
+
+      transitionTimer = window.setTimeout(() => {
+        image.src = suite.image;
+        image.alt = `Placeholder da suíte ${suite.name}`;
+        name.textContent = suite.name;
+        description.textContent = suite.description;
+        attributes.replaceChildren(
+          ...suite.attributes.map((attribute) => {
+            const item = document.createElement("li");
+            item.textContent = attribute;
+            return item;
+          })
+        );
+
+        const message = `Olá! Quero consultar disponibilidade da suíte ${suite.name}.`;
+        cta.dataset.message = message;
+        cta.href = buildWhatsAppUrl(message);
+
+        list.querySelectorAll("button").forEach((button, buttonIndex) => {
+          const isActive = buttonIndex === activeIndex;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-selected", String(isActive));
+          button.tabIndex = isActive ? 0 : -1;
+        });
+
+        panel.classList.remove("is-changing");
+      }, 130);
+    }
+
+    suites.forEach((suite, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = suite.name;
+      button.setAttribute("role", "tab");
+      button.setAttribute("aria-controls", "suite-detail-panel");
+      button.setAttribute("aria-selected", String(index === activeIndex));
+      button.classList.toggle("is-active", index === activeIndex);
+      button.tabIndex = index === activeIndex ? 0 : -1;
+      button.addEventListener("click", () => renderSuite(index));
+      button.addEventListener("keydown", (event) => {
+        if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+
+        const nextIndex =
+          event.key === "Home"
+            ? 0
+            : event.key === "End"
+              ? suites.length - 1
+              : event.key === "ArrowUp" || event.key === "ArrowLeft"
+                ? (activeIndex - 1 + suites.length) % suites.length
+                : (activeIndex + 1) % suites.length;
+
+        renderSuite(nextIndex);
+        list.querySelectorAll("button")[nextIndex].focus();
+      });
+      list.appendChild(button);
+    });
+
+    renderSuite(0);
+  }
+
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     const message = link.dataset.message || "Olá! Vim pelo site do Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
     link.setAttribute("target", "_blank");
     link.setAttribute("rel", "noopener noreferrer");
   });
+
+  setupSuiteExplorer();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
