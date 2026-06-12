@@ -235,6 +235,7 @@ textarea {
   padding-top: clamp(40px, 5vw, 72px);
   padding-bottom: clamp(40px, 5vw, 72px);
   background: var(--color-bg);
+  overflow-x: clip;
 }
 
 .suites {
@@ -738,6 +739,48 @@ textarea {
   background: rgba(33, 76, 67, 0.06);
 }
 
+.restaurant-section .reveal-from-depth {
+  --restaurant-depth-offset: translateY(0);
+  opacity: 1;
+  transform: translateY(0) scale(1) var(--restaurant-depth-offset);
+  filter: blur(0);
+  transition:
+    opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
+}
+
+.restaurant-section.is-reveal-ready:not(.is-visible) .reveal-from-depth {
+  opacity: 0;
+  transform: translateY(48px) scale(0.94) var(--restaurant-depth-offset);
+  filter: blur(8px);
+}
+
+.restaurant-section.is-visible .delay-1 {
+  transition-delay: 80ms;
+}
+
+.restaurant-section.is-visible .delay-2 {
+  transition-delay: 160ms;
+}
+
+.restaurant-section.is-visible .delay-3 {
+  transition-delay: 240ms;
+}
+
+.restaurant-section.is-visible .delay-4 {
+  transition-delay: 320ms;
+}
+
+.restaurant-section.is-visible .delay-5 {
+  transition-delay: 400ms;
+}
+
+.restaurant-section.is-visible .delay-6 {
+  transition-delay: 480ms;
+}
+
 .restaurant-gallery {
   width: min(100%, 460px);
   justify-self: end;
@@ -753,6 +796,11 @@ textarea {
   object-fit: cover;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
+  transition:
+    opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms ease;
 }
 
 .restaurant-gallery__item--one {
@@ -760,18 +808,23 @@ textarea {
 }
 
 .restaurant-gallery__item--two {
+  --restaurant-depth-offset: translateY(-22px);
   object-position: 42% 50%;
-  transform: translateY(-22px) rotate(-90deg);
+  transform: translateY(-22px);
 }
 
 .restaurant-gallery__item--three {
   object-position: 34% 50%;
-  transform: rotate(-90deg);
 }
 
 .restaurant-gallery__item--four {
+  --restaurant-depth-offset: translateY(-22px);
   object-position: 30% 50%;
-  transform: translateY(-22px) rotate(-90deg);
+  transform: translateY(-22px);
+}
+
+.restaurant-section.is-visible .restaurant-gallery__item:hover {
+  transform: scale(1.03) var(--restaurant-depth-offset);
 }
 
 /* =========================================================
@@ -1365,6 +1418,16 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .restaurant-section.is-reveal-ready:not(.is-visible) .reveal-from-depth {
+    transform: translateY(28px) scale(0.97) var(--restaurant-depth-offset);
+    filter: blur(4px);
+  }
+
+  .restaurant-section.is-visible .reveal-from-depth {
+    transform: translateY(0) scale(1) var(--restaurant-depth-offset);
+    filter: blur(0);
+  }
+
   .suite-detail-panel.is-sliding-in {
     animation-name: suitePanelRevealUp;
   }
@@ -1548,6 +1611,15 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .restaurant-section .reveal-from-depth,
+  .restaurant-section.is-reveal-ready:not(.is-visible) .reveal-from-depth,
+  .restaurant-section.is-visible .reveal-from-depth {
+    opacity: 1 !important;
+    transform: var(--restaurant-depth-offset) !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
   .suites.is-reveal-ready:not(.is-revealed) .section-header,
   .suites.is-reveal-ready:not(.is-revealed) .suite-table,
   .suites.is-reveal-ready:not(.is-revealed) .suite-detail-panel,

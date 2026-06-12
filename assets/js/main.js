@@ -259,6 +259,33 @@
     observer.observe(suitesSection);
   }
 
+  function setupRestaurantReveal() {
+    const restaurantSection = document.querySelector("#restaurante.restaurant-section");
+    if (!restaurantSection) return;
+
+    if (!restaurantSection.classList.contains("is-reveal-ready")) {
+      restaurantSection.classList.add("is-reveal-ready");
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      restaurantSection.classList.add("is-visible");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          restaurantSection.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.25
+      }
+    );
+
+    observer.observe(restaurantSection);
+  }
+
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     const message = link.dataset.message || "Olá! Vim pelo site do Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
@@ -268,6 +295,7 @@
 
   setupSuiteExplorer();
   setupSuiteReveal();
+  setupRestaurantReveal();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
