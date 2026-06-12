@@ -136,42 +136,44 @@
     if (!list || !panel || !image || !name || !description || !attributes || !cta) return;
 
     let activeIndex = 0;
-    let transitionTimer;
-
-    function renderSuite(index) {
+    function renderSuite(index, animate = true) {
       const suite = suites[index];
       if (!suite) return;
 
       activeIndex = index;
-      window.clearTimeout(transitionTimer);
-      panel.classList.add("is-changing");
 
-      transitionTimer = window.setTimeout(() => {
-        image.src = suite.image;
-        image.alt = `Placeholder da suíte ${suite.name}`;
-        name.textContent = suite.name;
-        description.textContent = suite.description;
-        attributes.replaceChildren(
-          ...suite.attributes.map((attribute) => {
-            const item = document.createElement("li");
-            item.textContent = attribute;
-            return item;
-          })
-        );
+      if (animate) {
+        panel.classList.remove("is-sliding-in");
+        void panel.offsetWidth;
+      }
 
-        const message = suite.whatsappMessage;
-        cta.dataset.message = message;
-        cta.href = buildWhatsAppUrl(message);
+      image.src = suite.image;
+      image.alt = `Placeholder da suíte ${suite.name}`;
+      name.textContent = suite.name;
+      description.textContent = suite.description;
+      attributes.replaceChildren(
+        ...suite.attributes.map((attribute) => {
+          const item = document.createElement("li");
+          item.textContent = attribute;
+          return item;
+        })
+      );
 
-        list.querySelectorAll("button").forEach((button, buttonIndex) => {
-          const isActive = buttonIndex === activeIndex;
-          button.classList.toggle("is-active", isActive);
-          button.setAttribute("aria-selected", String(isActive));
-          button.tabIndex = isActive ? 0 : -1;
-        });
+      const message = suite.whatsappMessage;
+      cta.dataset.message = message;
+      cta.href = buildWhatsAppUrl(message);
 
-        panel.classList.remove("is-changing");
-      }, 130);
+      list.querySelectorAll("button").forEach((button, buttonIndex) => {
+        const isActive = buttonIndex === activeIndex;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+        button.tabIndex = isActive ? 0 : -1;
+      });
+
+      if (animate) {
+        void panel.offsetWidth;
+        panel.classList.add("is-sliding-in");
+      }
     }
 
     suites.forEach((suite, index) => {
@@ -213,7 +215,48 @@
       list.appendChild(button);
     });
 
-    renderSuite(0);
+    renderSuite(0, false);
+  }
+
+  function setupSuiteReveal() {
+    const suitesSection = document.querySelector(".suites");
+    if (!suitesSection) return;
+
+    if (!suitesSection.classList.contains("is-reveal-ready")) {
+      suitesSection.classList.add("is-reveal-ready");
+    }
+    let revealTimer;
+
+    function revealSection() {
+      window.clearTimeout(revealTimer);
+      suitesSection.classList.remove("is-revealed", "is-revealing");
+      void suitesSection.offsetWidth;
+      suitesSection.classList.add("is-revealing");
+      revealTimer = window.setTimeout(() => {
+        suitesSection.classList.remove("is-revealing");
+        suitesSection.classList.add("is-revealed");
+      }, 2400);
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      revealSection();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealSection();
+        });
+      },
+      {
+        rootMargin: "0px 0px -15% 0px",
+        threshold: 0.2
+      }
+    );
+
+    observer.observe(suitesSection);
   }
 
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
@@ -224,6 +267,7 @@
   });
 
   setupSuiteExplorer();
+  setupSuiteReveal();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
