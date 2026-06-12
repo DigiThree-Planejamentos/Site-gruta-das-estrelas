@@ -334,6 +334,8 @@ textarea {
 }
 
 .structure {
+  position: relative;
+  overflow: hidden;
   padding: clamp(64px, 7vw, 104px) 0;
   background: var(--color-bg);
 }
@@ -512,6 +514,43 @@ textarea {
   height: 2px;
   margin: 5px 0;
   background: #fff;
+}
+
+/* Header content sits above the decorative wave */
+.site-header > .brand,
+.site-header > .menu-toggle,
+.site-header > .main-nav,
+.site-header > .header-cta {
+  position: relative;
+  z-index: 1;
+}
+
+/* Wave animation running along the base of the header, from the logo to the end */
+.header-wave {
+  position: absolute;
+  z-index: 0;
+  bottom: 2px;
+  left: calc(clamp(18px, 5vw, 58px) + clamp(82px, 7vw, 104px) + 16px);
+  right: clamp(18px, 5vw, 58px);
+  height: 22px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.header-wave .wave-divider__line {
+  bottom: 7px;
+  height: 7px;
+  background-size: 26px 7px;
+}
+
+.header-wave .wave-divider__boat {
+  width: 15px;
+  bottom: 6px;
+}
+
+.header-wave .wave-divider__jetski {
+  width: 20px;
+  bottom: 6px;
 }
 
 /* =========================================================
@@ -1154,41 +1193,59 @@ textarea {
 /* =========================================================
    Structure (4 cards)
    ========================================================= */
+.structure-carousel-shell {
+  position: relative;
+  margin-top: clamp(26px, 3.5vw, 42px);
+}
+
 .structure-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 22px);
+  display: flex;
+  gap: clamp(40px, 5vw, 68px);
   align-items: start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px clamp(44px, 5vw, 64px) 12px;
+  margin-inline: calc(clamp(44px, 5vw, 64px) * -1);
+  scroll-behavior: smooth;
+  scroll-padding-inline: clamp(44px, 5vw, 64px);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.structure-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .structure-item {
   display: grid;
-  gap: 12px;
+  gap: 4px;
+  flex: 0 0 clamp(240px, 24vw, 300px);
   min-width: 0;
+  scroll-snap-align: start;
 }
 
 .structure-card {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   align-content: start;
-  min-height: 168px;
-  padding: clamp(22px, 2.4vw, 28px);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: var(--shadow-soft);
+  min-height: 112px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .structure-card .card-title {
-  font-size: clamp(1.18rem, 1.45vw, 1.48rem);
+  font-size: clamp(1rem, 1.2vw, 1.24rem);
   line-height: 1.12;
 }
 
 .structure-card p {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.58;
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .experience-carousel {
@@ -1229,7 +1286,7 @@ textarea {
 
 .experience-carousel img {
   width: 25%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
@@ -1271,6 +1328,68 @@ textarea {
   right: 10px;
 }
 
+.structure-scroll-control {
+  position: absolute;
+  z-index: 3;
+  top: 58%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-primary-dark, #15352f);
+  background: transparent;
+  box-shadow: none;
+  font-size: 3.4rem;
+  line-height: 1;
+  cursor: pointer;
+  text-shadow: 0 1px 10px rgba(248, 243, 234, 0.6);
+  transform: translateY(-50%);
+  transition: opacity 180ms ease, transform 180ms ease, color 180ms ease;
+}
+
+.structure-scroll-control::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -100vh;
+  bottom: -100vh;
+  width: 130px;
+  pointer-events: none;
+}
+
+.structure-scroll-control--prev::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(21, 53, 47, 0.6), rgba(21, 53, 47, 0));
+}
+
+.structure-scroll-control--next::before {
+  right: 0;
+  background: linear-gradient(to left, rgba(21, 53, 47, 0.6), rgba(21, 53, 47, 0));
+}
+
+.structure-scroll-control:hover,
+.structure-scroll-control:focus-visible {
+  outline: none;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.structure-scroll-control:disabled {
+  opacity: 0.32;
+  cursor: default;
+  transform: translateY(-50%);
+}
+
+.structure-scroll-control--prev {
+  left: calc((100% - 100vw) / 2);
+}
+
+.structure-scroll-control--next {
+  right: calc((100% - 100vw) / 2);
+}
+
 @keyframes experienceCarousel {
   0%,
   18% {
@@ -1300,22 +1419,80 @@ textarea {
 /* =========================================================
    Gallery
    ========================================================= */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 20px;
+.gallery-carousel {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
-.gallery-grid img {
-  width: 100%;
-  height: 100%;
-  min-height: 260px;
+.gallery-carousel__viewport {
+  overflow: hidden;
   border-radius: var(--radius-lg);
-  object-fit: cover;
+  box-shadow: var(--shadow-card);
 }
 
-.gallery-grid img:first-child {
-  grid-row: span 2;
+.gallery-carousel__track {
+  display: flex;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-carousel__track img {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-carousel__next {
+  position: absolute;
+  top: 50%;
+  right: clamp(10px, 2vw, 18px);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  background: rgba(21, 53, 47, 0.62);
+  box-shadow: 0 10px 26px rgba(21, 53, 47, 0.28);
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.gallery-carousel__next:hover,
+.gallery-carousel__next:focus-visible {
+  outline: none;
+  background: rgba(21, 53, 47, 0.85);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.gallery-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.gallery-carousel__dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(33, 76, 67, 0.28);
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.gallery-carousel__dots button.is-active {
+  background: var(--color-primary, #214c43);
+  transform: scale(1.25);
 }
 
 /* =========================================================
@@ -1540,7 +1717,11 @@ textarea {
 
 @media (max-width: 1024px) {
   .structure-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px;
+  }
+
+  .structure-item {
+    flex-basis: clamp(240px, 40vw, 300px);
   }
 }
 
@@ -1549,6 +1730,10 @@ textarea {
     grid-template-columns: auto auto;
     gap: 10px;
     padding: 8px 16px;
+  }
+
+  .header-wave {
+    display: none;
   }
 
   .menu-toggle {
@@ -1733,10 +1918,35 @@ textarea {
   }
 
   .highlights-grid,
-  .structure-grid,
   .gallery-grid,
   .lead-form {
     grid-template-columns: 1fr;
+  }
+
+  .structure-grid {
+    gap: 28px;
+    padding-inline: 18px;
+    margin-inline: -18px;
+    scroll-padding-inline: 18px;
+  }
+
+  .structure-item {
+    flex-basis: min(72vw, 280px);
+  }
+
+  .structure-scroll-control {
+    top: 60%;
+    width: 48px;
+    height: 48px;
+    font-size: 2.8rem;
+  }
+
+  .structure-scroll-control--prev {
+    left: calc((100% - 100vw) / 2);
+  }
+
+  .structure-scroll-control--next {
+    right: calc((100% - 100vw) / 2);
   }
 
   .suite-table__head {
@@ -1816,7 +2026,7 @@ textarea {
   }
 
   .structure-card {
-    padding: 26px 24px;
+    padding: 0;
   }
 }
 
@@ -1908,5 +2118,115 @@ textarea {
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* ===========================================================
+   Wave divider — thin animated white waves + tiny boat.
+   Decorative separator between the experience title and cards.
+   Fully scoped under .wave-divider. CSS-only, no JS.
+   =========================================================== */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin: clamp(6px, 1.5vw, 14px) 0 clamp(16px, 2.5vw, 26px);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Linha em formato de ondas curvas (côncavas) */
+.wave-divider__line {
+  position: absolute;
+  left: -32px;
+  right: -32px;
+  bottom: 14px;
+  height: 12px;
+  opacity: 0.9;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='44'%20height='12'%20viewBox='0%200%2044%2012'%3E%3Cpath%20d='M0%209%20Q22%209%2022%202%20Q22%209%2044%209'%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.8'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 44px 12px;
+}
+
+.wave-divider__boat {
+  position: absolute;
+  z-index: 2;
+  bottom: 13px;
+  left: -28px;
+  width: 24px;
+  height: auto;
+  color: #fff;
+  filter: drop-shadow(0 1px 1.5px rgba(33, 52, 47, 0.28));
+  animation: waveDividerSail 11s linear infinite, waveDividerBob 2.6s ease-in-out infinite;
+}
+
+.wave-divider__jetski {
+  position: absolute;
+  z-index: 2;
+  bottom: 12px;
+  left: -36px;
+  width: 32px;
+  height: auto;
+  color: #fff;
+  filter: drop-shadow(0 1px 1.5px rgba(33, 52, 47, 0.28));
+  animation: waveDividerJet 8s linear infinite, waveDividerBob 2.1s ease-in-out infinite;
+}
+
+@keyframes waveDividerSail {
+  from {
+    left: -28px;
+  }
+  to {
+    left: calc(100% + 28px);
+  }
+}
+
+@keyframes waveDividerJet {
+  from {
+    left: -36px;
+  }
+  to {
+    left: calc(100% + 36px);
+  }
+}
+
+@keyframes waveDividerBob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .wave-divider {
+    height: 34px;
+  }
+
+  .wave-divider__boat {
+    width: 20px;
+  }
+
+  .wave-divider__jetski {
+    width: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-divider__boat,
+  .wave-divider__jetski {
+    animation: none !important;
+  }
+
+  .wave-divider__boat {
+    left: 38%;
+    transform: translateX(-50%);
+  }
+
+  .wave-divider__jetski {
+    left: 62%;
+    transform: translateX(-50%);
   }
 }

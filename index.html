@@ -56,6 +56,20 @@
       <a class="header-cta" href="#" data-whatsapp-link data-message="Olá! Vim pelo site e quero fazer uma reserva no Gruta das Estrelas.">
         WhatsApp
       </a>
+
+      <div class="header-wave" aria-hidden="true">
+        <span class="wave-divider__line"></span>
+        <svg class="wave-divider__boat" viewBox="0 0 30 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 16 H26 L22.5 21.5 H7.5 Z" />
+          <path d="M15 2.5 L15 14.5 L24 14.5 Z" />
+          <rect x="14.2" y="2.5" width="1.5" height="12" />
+        </svg>
+        <svg class="wave-divider__jetski" viewBox="0 0 34 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 11 Q7 8.5 13 8.5 L27 8.5 Q31 8.5 31 10.5 Q31 13 26 13 L6 13 Q2 13 2 11 Z" />
+          <path d="M15 8.5 Q18 4.5 24 6.5 L25.5 8.5 Z" />
+          <path d="M16 8.5 L11 6.2 L12 5.4 L17.5 7.8 Z" />
+        </svg>
+      </div>
     </header>
 
     <main>
@@ -197,7 +211,9 @@
             <h2 class="section-title">Tudo que você precisa para aproveitar o dia</h2>
             <p class="section-description">Estrutura completa para passar o dia, se hospedar ou chegar de barco pelo Saco do Céu.</p>
           </div>
-          <div class="structure-grid">
+          <div class="structure-carousel-shell">
+            <button class="structure-scroll-control structure-scroll-control--prev" type="button" aria-label="Ver experiência anterior">‹</button>
+            <div class="structure-grid" tabindex="0" aria-label="Experiências disponíveis">
             <article class="structure-item">
               <div class="structure-card">
                 <h3 class="card-title">Para relaxar</h3>
@@ -262,6 +278,8 @@
                 <button class="experience-carousel__control experience-carousel__control--next" type="button" aria-label="Próxima foto">›</button>
               </div>
             </article>
+            </div>
+            <button class="structure-scroll-control structure-scroll-control--next" type="button" aria-label="Ver próxima experiência">›</button>
           </div>
         </div>
       </section>
@@ -273,11 +291,33 @@
             <h2 class="section-title">A beleza do Gruta em cada detalhe</h2>
             <p class="section-description">Cada imagem revela um pedaço do clima do Gruta das Estrelas no Saco do Céu.</p>
           </div>
-          <div class="gallery-grid">
-            <img src="assets/img/gruta-hero.png" alt="Vista aérea do Gruta das Estrelas no Saco do Céu" width="1920" height="1080" loading="lazy" decoding="async" />
-            <img src="assets/img/gruta-localizacao.jpg" alt="Fachada, deck e suítes do Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
-            <img src="assets/img/gruta-suite.jpg" alt="Suítes e natureza no Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
-            <img src="assets/img/gruta-cafe.jpg" alt="Frutos do mar no restaurante Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
+          <div class="gallery-carousel" data-gallery-carousel>
+            <div class="gallery-carousel__viewport">
+              <div class="gallery-carousel__track" data-gallery-track>
+                <img src="assets/img/gruta-hero.png" alt="Vista aérea do Gruta das Estrelas no Saco do Céu" width="1920" height="1080" loading="lazy" decoding="async" />
+                <img src="assets/img/gruta-localizacao.jpg" alt="Fachada, deck e suítes do Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
+                <img src="assets/img/gruta-suite.jpg" alt="Suítes e natureza no Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
+                <img src="assets/img/gruta-cafe.jpg" alt="Frutos do mar no restaurante Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <button class="gallery-carousel__next" type="button" data-gallery-next aria-label="Próxima foto">›</button>
+            <div class="gallery-carousel__dots" role="tablist" aria-label="Selecionar foto" data-gallery-dots></div>
+          </div>
+        </div>
+
+        <div class="section-inner">
+          <div class="wave-divider" aria-hidden="true">
+            <span class="wave-divider__line"></span>
+            <svg class="wave-divider__boat" viewBox="0 0 30 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 16 H26 L22.5 21.5 H7.5 Z" />
+              <path d="M15 2.5 L15 14.5 L24 14.5 Z" />
+              <rect x="14.2" y="2.5" width="1.5" height="12" />
+            </svg>
+            <svg class="wave-divider__jetski" viewBox="0 0 34 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 11 Q7 8.5 13 8.5 L27 8.5 Q31 8.5 31 10.5 Q31 13 26 13 L6 13 Q2 13 2 11 Z" />
+              <path d="M15 8.5 Q18 4.5 24 6.5 L25.5 8.5 Z" />
+              <path d="M16 8.5 L11 6.2 L12 5.4 L17.5 7.8 Z" />
+            </svg>
           </div>
         </div>
       </section>

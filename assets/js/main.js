@@ -337,6 +337,92 @@
     });
   }
 
+  function setupGalleryCarousel() {
+    const carousel = document.querySelector("[data-gallery-carousel]");
+    if (!carousel) return;
+
+    const track = carousel.querySelector("[data-gallery-track]");
+    const nextButton = carousel.querySelector("[data-gallery-next]");
+    const dotsContainer = carousel.querySelector("[data-gallery-dots]");
+    const slides = track ? Array.from(track.querySelectorAll("img")) : [];
+
+    if (!track || slides.length < 2) return;
+
+    let activeIndex = 0;
+
+    function render() {
+      track.style.transform = `translateX(-${activeIndex * 100}%)`;
+
+      if (!dotsContainer) return;
+      dotsContainer.querySelectorAll("button").forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-selected", String(isActive));
+        dot.tabIndex = isActive ? 0 : -1;
+      });
+    }
+
+    function goTo(index) {
+      activeIndex = (index + slides.length) % slides.length;
+      render();
+    }
+
+    if (dotsContainer) {
+      slides.forEach((slide, index) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", `Ver foto ${index + 1}`);
+        dot.addEventListener("click", () => goTo(index));
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener("click", () => goTo(activeIndex + 1));
+    }
+
+    render();
+  }
+
+  function setupExperienceScroller() {
+    const shell = document.querySelector(".structure-carousel-shell");
+    if (!shell) return;
+
+    const track = shell.querySelector(".structure-grid");
+    const prev = shell.querySelector(".structure-scroll-control--prev");
+    const next = shell.querySelector(".structure-scroll-control--next");
+
+    if (!track || !prev || !next) return;
+
+    function getScrollAmount() {
+      const firstItem = track.querySelector(".structure-item");
+      if (!firstItem) return track.clientWidth * 0.8;
+
+      const trackStyles = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+      return firstItem.getBoundingClientRect().width + gap;
+    }
+
+    function updateControls() {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= maxScroll - 2;
+    }
+
+    prev.addEventListener("click", () => {
+      track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    });
+
+    next.addEventListener("click", () => {
+      track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+    });
+
+    track.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
+    updateControls();
+  }
+
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     const message = link.dataset.message || "Olá! Vim pelo site do Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
@@ -349,6 +435,8 @@
   setupRestaurantReveal();
   setupAboutReveal();
   setupExperienceCarousels();
+  setupExperienceScroller();
+  setupGalleryCarousel();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
