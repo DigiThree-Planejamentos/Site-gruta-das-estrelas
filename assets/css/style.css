@@ -334,7 +334,29 @@ textarea {
 }
 
 .structure {
+  padding: clamp(64px, 7vw, 104px) 0;
   background: var(--color-bg);
+}
+
+.structure .section-header {
+  gap: 12px;
+  max-width: 680px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.structure .section-eyebrow {
+  font-size: 0.68rem;
+}
+
+.structure .section-title {
+  max-width: 560px;
+  font-size: clamp(1.85rem, 3vw, 3rem);
+}
+
+.structure .section-description {
+  max-width: 560px;
+  font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .gallery {
@@ -545,6 +567,63 @@ textarea {
   line-height: 1.05;
   letter-spacing: -0.02em;
   text-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
+}
+
+.hero .hero-title-line,
+.hero .hero-blur-reveal {
+  opacity: 0;
+  filter: blur(28px);
+  transform: scale(1.18) translateY(18px);
+  animation: heroBlurFadeIn 1100ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: opacity, filter, transform;
+}
+
+.hero .hero-title-line {
+  display: block;
+}
+
+.hero .delay-1 {
+  animation-delay: 100ms;
+}
+
+.hero .delay-2 {
+  animation-delay: 420ms;
+}
+
+.hero .delay-3 {
+  animation-delay: 760ms;
+}
+
+.hero .delay-4 {
+  animation-delay: 1100ms;
+}
+
+.hero .hero-subtitle {
+  animation-duration: 900ms;
+}
+
+.hero .hero-actions {
+  animation-duration: 700ms;
+}
+
+@keyframes heroBlurFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(28px);
+    transform: scale(1.18) translateY(18px);
+  }
+
+  55% {
+    opacity: 0.7;
+    filter: blur(8px);
+    transform: scale(1.06) translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1) translateY(0);
+  }
 }
 
 .hero p:not(.eyebrow) {
@@ -1078,24 +1157,144 @@ textarea {
 .structure-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  gap: clamp(14px, 2vw, 22px);
+  align-items: start;
+}
+
+.structure-item {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
 }
 
 .structure-card {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   align-content: start;
-  padding: 30px 28px;
+  min-height: 168px;
+  padding: clamp(22px, 2.4vw, 28px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.82);
   box-shadow: var(--shadow-soft);
+}
+
+.structure-card .card-title {
+  font-size: clamp(1.18rem, 1.45vw, 1.48rem);
+  line-height: 1.12;
 }
 
 .structure-card p {
   margin: 0;
   color: var(--color-muted);
-  line-height: 1.65;
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.experience-carousel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.experience-carousel__track {
+  display: flex;
+  width: 400%;
+  animation: experienceCarousel 18s ease-in-out infinite;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.experience-carousel.is-controlled .experience-carousel__track {
+  animation: none;
+}
+
+.structure-item:nth-child(2) .experience-carousel__track {
+  animation-delay: -4s;
+}
+
+.structure-item:nth-child(3) .experience-carousel__track {
+  animation-delay: -8s;
+}
+
+.structure-item:nth-child(4) .experience-carousel__track {
+  animation-delay: -12s;
+}
+
+.experience-carousel:hover .experience-carousel__track {
+  animation-play-state: paused;
+}
+
+.experience-carousel img {
+  width: 25%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.experience-carousel__control {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  text-shadow: 0 2px 10px rgba(10, 24, 23, 0.42);
+  transform: translateY(-50%);
+  transition: color 180ms ease, transform 180ms ease, text-shadow 180ms ease;
+}
+
+.experience-carousel__control:hover,
+.experience-carousel__control:focus-visible {
+  color: rgba(255, 255, 255, 0.86);
+  outline: none;
+  text-shadow: 0 3px 14px rgba(10, 24, 23, 0.58);
+  transform: translateY(-50%) scale(1.04);
+}
+
+.experience-carousel__control--prev {
+  left: 10px;
+}
+
+.experience-carousel__control--next {
+  right: 10px;
+}
+
+@keyframes experienceCarousel {
+  0%,
+  18% {
+    transform: translateX(0);
+  }
+
+  25%,
+  43% {
+    transform: translateX(-25%);
+  }
+
+  50%,
+  68% {
+    transform: translateX(-50%);
+  }
+
+  75%,
+  93% {
+    transform: translateX(-75%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* =========================================================
@@ -1451,6 +1650,12 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .hero .hero-title-line,
+  .hero .hero-blur-reveal {
+    filter: blur(16px);
+    transform: scale(1.08) translateY(12px);
+  }
+
   .about-section .about-reveal {
     transform: translateY(-22px);
   }
@@ -1648,6 +1853,19 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero .hero-title-line,
+  .hero .hero-blur-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .experience-carousel__track {
+    animation: none !important;
+    transform: none !important;
+  }
+
   .about-section .about-reveal,
   .about-section.is-visible .about-reveal {
     opacity: 1 !important;

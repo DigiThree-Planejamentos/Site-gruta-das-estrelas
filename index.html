@@ -64,9 +64,12 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <div class="hero-copy">
-            <h1 id="hero-title">O destino dos seus sonhos</h1>
-            <p>Restaurante e Suítes em um só lugar</p>
-            <div class="hero-actions">
+            <h1 id="hero-title">
+              <span class="hero-title-line delay-1">O destino</span>
+              <span class="hero-title-line delay-2">dos seus sonhos</span>
+            </h1>
+            <p class="hero-subtitle hero-blur-reveal delay-3">Restaurante e Suítes em um só lugar</p>
+            <div class="hero-actions hero-blur-reveal delay-4">
               <a class="btn btn-primary" href="#" data-whatsapp-link data-message="Olá! Quero reservar no Gruta das Estrelas.">Reservar pelo WhatsApp</a>
               <a class="btn btn-secondary" href="#suites">Conhecer as suítes</a>
             </div>
@@ -195,21 +198,69 @@
             <p class="section-description">Estrutura completa para passar o dia, se hospedar ou chegar de barco pelo Saco do Céu.</p>
           </div>
           <div class="structure-grid">
-            <article class="structure-card">
-              <h3 class="card-title">Para relaxar</h3>
-              <p>Piscina natural, cascata, deck e chuveiro para aproveitar a ilha sem pressa.</p>
+            <article class="structure-item">
+              <div class="structure-card">
+                <h3 class="card-title">Para relaxar</h3>
+                <p>Piscina natural, cascata, deck e chuveiro para aproveitar a ilha sem pressa.</p>
+              </div>
+              <div class="experience-carousel" aria-label="Fotos da experiência para relaxar">
+                <div class="experience-carousel__track">
+                  <img src="assets/img/experiencia/relaxar-1.jpg" alt="Área externa para relaxar no Gruta das Estrelas" width="820" height="547" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/relaxar-2.jpg" alt="Detalhe da estrutura de lazer para relaxar" width="547" height="820" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/relaxar-3.jpg" alt="Ambiente natural para descanso no Gruta das Estrelas" width="820" height="547" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/relaxar-4.jpg" alt="Espaço de descanso cercado pela natureza" width="820" height="547" loading="lazy" decoding="async" />
+                </div>
+                <button class="experience-carousel__control experience-carousel__control--prev" type="button" aria-label="Foto anterior">‹</button>
+                <button class="experience-carousel__control experience-carousel__control--next" type="button" aria-label="Próxima foto">›</button>
+              </div>
             </article>
-            <article class="structure-card">
-              <h3 class="card-title">Para se hospedar</h3>
-              <p>Suítes aconchegantes, Wi-Fi e café da manhã para começar o dia com tranquilidade.</p>
+            <article class="structure-item">
+              <div class="structure-card">
+                <h3 class="card-title">Para se hospedar</h3>
+                <p>Suítes aconchegantes, Wi-Fi e café da manhã para começar o dia com tranquilidade.</p>
+              </div>
+              <div class="experience-carousel" aria-label="Fotos da experiência para se hospedar">
+                <div class="experience-carousel__track">
+                  <img src="assets/img/experiencia/hospedar-1.jpg" alt="Vista da hospedagem no Gruta das Estrelas" width="820" height="462" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/hospedar-2.jpg" alt="Vista aérea da área de hospedagem" width="820" height="615" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/hospedar-3.jpg" alt="Suíte preparada para hospedagem" width="820" height="547" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/hospedar-4.jpg" alt="Ambiente interno de hospedagem" width="820" height="547" loading="lazy" decoding="async" />
+                </div>
+                <button class="experience-carousel__control experience-carousel__control--prev" type="button" aria-label="Foto anterior">‹</button>
+                <button class="experience-carousel__control experience-carousel__control--next" type="button" aria-label="Próxima foto">›</button>
+              </div>
             </article>
-            <article class="structure-card">
-              <h3 class="card-title">Para quem chega pelo mar</h3>
-              <p>Cais, poitas e atendimento para embarcações que passam pelo Saco do Céu.</p>
+            <article class="structure-item">
+              <div class="structure-card">
+                <h3 class="card-title">Para quem chega pelo mar</h3>
+                <p>Cais, poitas e atendimento para embarcações que passam pelo Saco do Céu.</p>
+              </div>
+              <div class="experience-carousel" aria-label="Fotos da experiência para quem chega pelo mar">
+                <div class="experience-carousel__track">
+                  <img src="assets/img/experiencia/mar-1.jpg" alt="Chegada pelo mar no Saco do Céu" width="615" height="820" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/mar-2.jpg" alt="Vista do acesso pelo mar ao Gruta das Estrelas" width="615" height="820" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/mar-3.jpg" alt="Cais e entorno marítimo do Gruta das Estrelas" width="820" height="615" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/mar-4.jpg" alt="Estrutura para embarcações no Saco do Céu" width="547" height="820" loading="lazy" decoding="async" />
+                </div>
+                <button class="experience-carousel__control experience-carousel__control--prev" type="button" aria-label="Foto anterior">‹</button>
+                <button class="experience-carousel__control experience-carousel__control--next" type="button" aria-label="Próxima foto">›</button>
+              </div>
             </article>
-            <article class="structure-card">
-              <h3 class="card-title">Para saborear</h3>
-              <p>Restaurante à beira-mar com frutos do mar, pratos especiais e vista para a natureza.</p>
+            <article class="structure-item">
+              <div class="structure-card">
+                <h3 class="card-title">Para saborear</h3>
+                <p>Restaurante à beira-mar com frutos do mar, pratos especiais e vista para a natureza.</p>
+              </div>
+              <div class="experience-carousel" aria-label="Fotos da experiência para saborear">
+                <div class="experience-carousel__track">
+                  <img src="assets/img/experiencia/saborear-1.jpg" alt="Prato servido no restaurante do Gruta das Estrelas" width="615" height="820" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/saborear-2.jpg" alt="Mesa com pratos do restaurante" width="820" height="547" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/saborear-3.jpg" alt="Prato de frutos do mar servido no restaurante" width="820" height="547" loading="lazy" decoding="async" />
+                  <img src="assets/img/experiencia/saborear-4.jpg" alt="Experiência gastronômica no Gruta das Estrelas" width="547" height="820" loading="lazy" decoding="async" />
+                </div>
+                <button class="experience-carousel__control experience-carousel__control--prev" type="button" aria-label="Foto anterior">‹</button>
+                <button class="experience-carousel__control experience-carousel__control--next" type="button" aria-label="Próxima foto">›</button>
+              </div>
             </article>
           </div>
         </div>

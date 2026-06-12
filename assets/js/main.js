@@ -309,6 +309,34 @@
     observer.observe(aboutSection);
   }
 
+  function setupExperienceCarousels() {
+    document.querySelectorAll(".experience-carousel").forEach((carousel) => {
+      const track = carousel.querySelector(".experience-carousel__track");
+      const slides = carousel.querySelectorAll("img");
+      const prev = carousel.querySelector(".experience-carousel__control--prev");
+      const next = carousel.querySelector(".experience-carousel__control--next");
+
+      if (!track || slides.length < 2 || !prev || !next) return;
+
+      let activeIndex = 0;
+      carousel.classList.add("is-controlled");
+
+      function renderSlide() {
+        track.style.transform = `translateX(-${activeIndex * 25}%)`;
+      }
+
+      prev.addEventListener("click", () => {
+        activeIndex = (activeIndex - 1 + slides.length) % slides.length;
+        renderSlide();
+      });
+
+      next.addEventListener("click", () => {
+        activeIndex = (activeIndex + 1) % slides.length;
+        renderSlide();
+      });
+    });
+  }
+
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     const message = link.dataset.message || "Olá! Vim pelo site do Gruta das Estrelas.";
     link.setAttribute("href", buildWhatsAppUrl(message));
@@ -320,6 +348,7 @@
   setupSuiteReveal();
   setupRestaurantReveal();
   setupAboutReveal();
+  setupExperienceCarousels();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
