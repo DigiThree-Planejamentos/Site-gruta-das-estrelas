@@ -73,39 +73,51 @@
   const suites = [
     {
       name: "Brisa do Mar",
+      profile: "Aconchegante",
       description: "Suíte acolhedora para quem quer acordar perto da brisa e do ritmo calmo da Ilha Grande.",
       attributes: ["Vista para o ambiente natural", "Café da manhã incluso", "Banheiro privativo", "Ideal para casal"],
-      image: "assets/img/suite-brisa-do-mar-placeholder.svg"
+      image: "assets/img/suite-brisa-do-mar-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Brisa do Mar."
     },
     {
       name: "Canto dos Caranguejos",
+      profile: "Próxima à natureza",
       description: "Uma opção charmosa para descansar depois de um dia de mar, trilhas e gastronomia.",
       attributes: ["Ambiente aconchegante", "Café da manhã incluso", "Banheiro privativo", "Próxima à natureza"],
-      image: "assets/img/suite-canto-dos-caranguejos-placeholder.svg"
+      image: "assets/img/suite-canto-dos-caranguejos-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Canto dos Caranguejos."
     },
     {
       name: "Horizonte Verde",
+      profile: "Vista para o verde",
       description: "Suíte para contemplar a mata e aproveitar uma estadia tranquila no Saco do Céu.",
       attributes: ["Vista para o verde", "Café da manhã incluso", "Banheiro privativo", "Atmosfera relaxante"],
-      image: "assets/img/suite-horizonte-verde-placeholder.svg"
+      image: "assets/img/suite-horizonte-verde-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Horizonte Verde."
     },
     {
       name: "Céu da Ilha",
+      profile: "Intimista",
       description: "Hospedagem pensada para dias especiais, com atmosfera intimista e contato com a natureza.",
       attributes: ["Ambiente reservado", "Café da manhã incluso", "Banheiro privativo", "Ideal para descanso"],
-      image: "assets/img/suite-ceu-da-ilha-placeholder.svg"
+      image: "assets/img/suite-ceu-da-ilha-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Céu da Ilha."
     },
     {
       name: "Flor da Ilha",
+      profile: "Confortável",
       description: "Suíte leve e confortável para relaxar com praticidade durante a estadia na Ilha Grande.",
       attributes: ["Conforto", "Wi-Fi", "Café da manhã incluso", "Banheiro privativo"],
-      image: "assets/img/suite-flor-da-ilha-placeholder.svg"
+      image: "assets/img/suite-flor-da-ilha-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Flor da Ilha."
     },
     {
       name: "Florescer",
+      profile: "Privativa",
       description: "Uma suíte para quem procura descanso, privacidade e dias de conexão com a ilha.",
       attributes: ["Privacidade", "Café da manhã incluso", "Ar-condicionado", "Banheiro privativo"],
-      image: "assets/img/suite-florescer-placeholder.svg"
+      image: "assets/img/suite-florescer-placeholder.svg",
+      whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Florescer."
     }
   ];
 
@@ -147,7 +159,7 @@
           })
         );
 
-        const message = `Olá! Quero consultar disponibilidade da suíte ${suite.name}.`;
+        const message = suite.whatsappMessage;
         cta.dataset.message = message;
         cta.href = buildWhatsAppUrl(message);
 
@@ -165,12 +177,22 @@
     suites.forEach((suite, index) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = suite.name;
       button.setAttribute("role", "tab");
       button.setAttribute("aria-controls", "suite-detail-panel");
       button.setAttribute("aria-selected", String(index === activeIndex));
+      button.setAttribute("aria-label", `${suite.name}, perfil ${suite.profile}`);
       button.classList.toggle("is-active", index === activeIndex);
       button.tabIndex = index === activeIndex ? 0 : -1;
+
+      const suiteName = document.createElement("span");
+      suiteName.className = "suite-row__name";
+      suiteName.textContent = suite.name;
+
+      const suiteProfile = document.createElement("span");
+      suiteProfile.className = "suite-row__profile";
+      suiteProfile.textContent = suite.profile;
+
+      button.append(suiteName, suiteProfile);
       button.addEventListener("click", () => renderSuite(index));
       button.addEventListener("keydown", (event) => {
         if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
