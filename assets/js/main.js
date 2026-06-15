@@ -2,13 +2,36 @@
   const header = document.querySelector("[data-header]");
   const menuToggle = document.querySelector("[data-menu-toggle]");
   const nav = document.querySelector("[data-nav]");
+  const firstNavLink = nav ? nav.querySelector("a") : null;
+  const headerWave = header ? header.querySelector(".header-wave") : null;
   const leadForm = document.querySelector("[data-lead-form]");
   const statusBox = document.querySelector("[data-form-status]");
   const config = window.GRUTA_CONFIG || {};
 
+  function updateHeaderWave() {
+    if (!headerWave || !firstNavLink) return;
+
+    if (window.matchMedia("(max-width: 980px)").matches) {
+      headerWave.style.width = "";
+      headerWave.style.setProperty("--header-boat-left", "");
+      return;
+    }
+
+    const waveLeft = headerWave.getBoundingClientRect().left;
+    const navStart = firstNavLink.getBoundingClientRect().left;
+    const maxWidth = Math.max(0, navStart - waveLeft);
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+    const boatTravel = Math.max(0, maxWidth - 15);
+
+    headerWave.style.width = `${maxWidth}px`;
+    headerWave.style.setProperty("--header-boat-left", `${boatTravel * progress}px`);
+  }
+
   function updateHeader() {
     if (!header) return;
     header.classList.toggle("is-scrolled", window.scrollY > 20);
+    updateHeaderWave();
   }
 
   function buildWhatsAppUrl(message) {
@@ -439,6 +462,8 @@
   setupGalleryCarousel();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("resize", updateHeaderWave);
+  window.addEventListener("load", updateHeaderWave);
   updateHeader();
 
   if (menuToggle && header) {
