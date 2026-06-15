@@ -385,37 +385,126 @@
     if (!shell) return;
 
     const track = shell.querySelector(".structure-grid");
-    const prev = shell.querySelector(".structure-scroll-control--prev");
-    const next = shell.querySelector(".structure-scroll-control--next");
+    if (!track) return;
 
-    if (!track || !prev || !next) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lerp = 0.14;
 
-    function getScrollAmount() {
-      const firstItem = track.querySelector(".structure-item");
-      if (!firstItem) return track.clientWidth * 0.8;
+    let target = track.scrollLeft;
+    let rafId = null;
 
-      const trackStyles = window.getComputedStyle(track);
-      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
-      return firstItem.getBoundingClientRect().width + gap;
+    function maxScroll() {
+      return Math.max(0, track.scrollWidth - track.clientWidth);
     }
 
-    function updateControls() {
-      const maxScroll = track.scrollWidth - track.clientWidth;
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= maxScroll - 2;
+    function clamp(value) {
+      return Math.min(Math.max(value, 0), maxScroll());
     }
 
-    prev.addEventListener("click", () => {
-      track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    function loop() {
+      const current = track.scrollLeft;
+      const diff = target - current;
+
+      if (Math.abs(diff) < 1) {
+        track.scrollLeft = target;
+        rafId = null;
+        // Religa o scroll-snap só ao assentar (deixa a CSS reassumir suavemente).
+        track.style.scrollSnapType = "";
+        return;
+      }
+
+      // Passo mínimo de 1px: scrollLeft é arredondado pelo browser, então um
+      // passo sub-pixel sumiria e a animação travaria perto do alvo.
+      let step = diff * lerp;
+      if (Math.abs(step) < 1) step = Math.sign(diff);
+
+      track.scrollLeft = current + step;
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function animateTo(value) {
+      target = clamp(value);
+
+      if (reduceMotion) {
+        track.scrollLeft = target;
+        return;
+      }
+
+      // Desliga o snap durante a animação para não "puxar" de volta a cada frame.
+      track.style.scrollSnapType = "none";
+      if (rafId === null) rafId = requestAnimationFrame(loop);
+    }
+
+    // Suaviza apenas o scroll horizontal (trackpad / shift+roda).
+    // O scroll vertical da página não é tocado.
+    track.addEventListener(
+      "wheel",
+      (event) => {
+        if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+
+        const atStart = target <= 0 && event.deltaX < 0;
+        const atEnd = target >= maxScroll() && event.deltaX > 0;
+        if (atStart || atEnd) return;
+
+        event.preventDefault();
+        animateTo(target + event.deltaX);
+      },
+      { passive: false }
+    );
+
+    // Arrastar para o lado (somente mouse; no touch o scroll nativo já é suave).
+    let isDragging = false;
+    let startX = 0;
+    let startScroll = 0;
+    let lastX = 0;
+    let velocity = 0;
+
+    track.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      isDragging = true;
+      startX = event.clientX;
+      lastX = event.clientX;
+      startScroll = track.scrollLeft;
+      velocity = 0;
+      track.classList.add("is-dragging");
+      track.setPointerCapture(event.pointerId);
     });
 
-    next.addEventListener("click", () => {
-      track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+    track.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+
+      velocity = event.clientX - lastX;
+      lastX = event.clientX;
+      animateTo(startScroll - (event.clientX - startX));
     });
 
-    track.addEventListener("scroll", updateControls, { passive: true });
-    window.addEventListener("resize", updateControls);
-    updateControls();
+    function endDrag(event) {
+      if (!isDragging) return;
+
+      isDragging = false;
+      track.classList.remove("is-dragging");
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+
+      // Leve inércia ao soltar.
+      if (Math.abs(velocity) > 1) animateTo(target - velocity * 8);
+    }
+
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+
+    // Mantém o alvo sincronizado quando o scroll vem de swipe/teclado.
+    track.addEventListener(
+      "scroll",
+      () => {
+        if (rafId === null && !isDragging) target = track.scrollLeft;
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("resize", () => {
+      target = clamp(target);
+    });
   }
 
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {

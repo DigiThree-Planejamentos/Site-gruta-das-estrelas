@@ -1217,8 +1217,19 @@ textarea {
   margin-inline: calc(clamp(44px, 5vw, 64px) * -1);
   scroll-behavior: smooth;
   scroll-padding-inline: clamp(44px, 5vw, 64px);
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
+  cursor: grab;
+}
+
+.structure-grid.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.structure-grid.is-dragging img {
+  pointer-events: none;
 }
 
 .structure-grid::-webkit-scrollbar {
@@ -1335,68 +1346,6 @@ textarea {
 
 .experience-carousel__control--next {
   right: 10px;
-}
-
-.structure-scroll-control {
-  position: absolute;
-  z-index: 3;
-  top: 58%;
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  color: var(--color-primary-dark, #15352f);
-  background: transparent;
-  box-shadow: none;
-  font-size: 3.4rem;
-  line-height: 1;
-  cursor: pointer;
-  text-shadow: 0 1px 10px rgba(248, 243, 234, 0.6);
-  transform: translateY(-50%);
-  transition: opacity 180ms ease, transform 180ms ease, color 180ms ease;
-}
-
-.structure-scroll-control::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -100vh;
-  bottom: -100vh;
-  width: 130px;
-  pointer-events: none;
-}
-
-.structure-scroll-control--prev::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(21, 53, 47, 0.6), rgba(21, 53, 47, 0));
-}
-
-.structure-scroll-control--next::before {
-  right: 0;
-  background: linear-gradient(to left, rgba(21, 53, 47, 0.6), rgba(21, 53, 47, 0));
-}
-
-.structure-scroll-control:hover,
-.structure-scroll-control:focus-visible {
-  outline: none;
-  transform: translateY(-50%) scale(1.08);
-}
-
-.structure-scroll-control:disabled {
-  opacity: 0.32;
-  cursor: default;
-  transform: translateY(-50%);
-}
-
-.structure-scroll-control--prev {
-  left: calc((100% - 100vw) / 2);
-}
-
-.structure-scroll-control--next {
-  right: calc((100% - 100vw) / 2);
 }
 
 @keyframes experienceCarousel {
@@ -2007,21 +1956,6 @@ textarea {
 
   .structure-item {
     flex-basis: min(72vw, 280px);
-  }
-
-  .structure-scroll-control {
-    top: 60%;
-    width: 48px;
-    height: 48px;
-    font-size: 2.8rem;
-  }
-
-  .structure-scroll-control--prev {
-    left: calc((100% - 100vw) / 2);
-  }
-
-  .structure-scroll-control--next {
-    right: calc((100% - 100vw) / 2);
   }
 
   .suite-table__head {
