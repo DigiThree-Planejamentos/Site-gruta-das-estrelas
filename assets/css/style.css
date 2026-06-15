@@ -1215,21 +1215,8 @@ textarea {
   overflow-y: hidden;
   padding: 4px clamp(44px, 5vw, 64px) 12px;
   margin-inline: calc(clamp(44px, 5vw, 64px) * -1);
-  scroll-behavior: smooth;
   scroll-padding-inline: clamp(44px, 5vw, 64px);
-  scroll-snap-type: x proximity;
   scrollbar-width: none;
-  cursor: grab;
-}
-
-.structure-grid.is-dragging {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  user-select: none;
-}
-
-.structure-grid.is-dragging img {
-  pointer-events: none;
 }
 
 .structure-grid::-webkit-scrollbar {

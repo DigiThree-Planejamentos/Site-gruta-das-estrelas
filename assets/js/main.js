@@ -388,10 +388,7 @@
     if (!track) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const lerp = 0.14;
-
-    let target = track.scrollLeft;
-    let rafId = null;
+    const gsap = window.gsap;
 
     function maxScroll() {
       return Math.max(0, track.scrollWidth - track.clientWidth);
@@ -401,103 +398,55 @@
       return Math.min(Math.max(value, 0), maxScroll());
     }
 
-    function loop() {
-      const current = track.scrollLeft;
-      const diff = target - current;
-
-      if (Math.abs(diff) < 1) {
-        track.scrollLeft = target;
-        rafId = null;
-        // Religa o scroll-snap só ao assentar (deixa a CSS reassumir suavemente).
-        track.style.scrollSnapType = "";
-        return;
-      }
-
-      // Passo mínimo de 1px: scrollLeft é arredondado pelo browser, então um
-      // passo sub-pixel sumiria e a animação travaria perto do alvo.
-      let step = diff * lerp;
-      if (Math.abs(step) < 1) step = Math.sign(diff);
-
-      track.scrollLeft = current + step;
-      rafId = requestAnimationFrame(loop);
-    }
+    let target = track.scrollLeft;
+    let tween = null;
 
     function animateTo(value) {
       target = clamp(value);
 
-      if (reduceMotion) {
+      if (!gsap || reduceMotion) {
+        if (tween) tween.kill();
         track.scrollLeft = target;
         return;
       }
 
-      // Desliga o snap durante a animação para não "puxar" de volta a cada frame.
-      track.style.scrollSnapType = "none";
-      if (rafId === null) rafId = requestAnimationFrame(loop);
+      if (tween) tween.kill();
+      tween = gsap.to(track, {
+        scrollLeft: target,
+        duration: 0.6,
+        ease: "power3.out",
+        overwrite: true
+      });
     }
 
-    // Suaviza apenas o scroll horizontal (trackpad / shift+roda).
-    // O scroll vertical da página não é tocado.
+    // Reage à roda do mouse SOMENTE quando o ponteiro está sobre os cards
+    // (o listener fica no próprio track). A roda vertical do mouse vira
+    // movimento horizontal. Nas pontas, libera o scroll da página.
     track.addEventListener(
       "wheel",
       (event) => {
-        if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+        const max = maxScroll();
+        if (max <= 0) return; // nada para rolar: deixa a página rolar normal
 
-        const atStart = target <= 0 && event.deltaX < 0;
-        const atEnd = target >= maxScroll() && event.deltaX > 0;
-        if (atStart || atEnd) return;
+        const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+
+        // Base do gesto: posição real quando parado, destino do tween quando animando.
+        const base = tween && tween.isActive() ? target : track.scrollLeft;
+        const atStart = delta < 0 && base <= 0;
+        const atEnd = delta > 0 && base >= max;
+        if (atStart || atEnd) return; // nas pontas, segue o scroll da página
 
         event.preventDefault();
-        animateTo(target + event.deltaX);
+        animateTo(base + delta);
       },
       { passive: false }
     );
-
-    // Arrastar para o lado (somente mouse; no touch o scroll nativo já é suave).
-    let isDragging = false;
-    let startX = 0;
-    let startScroll = 0;
-    let lastX = 0;
-    let velocity = 0;
-
-    track.addEventListener("pointerdown", (event) => {
-      if (event.pointerType !== "mouse") return;
-
-      isDragging = true;
-      startX = event.clientX;
-      lastX = event.clientX;
-      startScroll = track.scrollLeft;
-      velocity = 0;
-      track.classList.add("is-dragging");
-      track.setPointerCapture(event.pointerId);
-    });
-
-    track.addEventListener("pointermove", (event) => {
-      if (!isDragging) return;
-
-      velocity = event.clientX - lastX;
-      lastX = event.clientX;
-      animateTo(startScroll - (event.clientX - startX));
-    });
-
-    function endDrag(event) {
-      if (!isDragging) return;
-
-      isDragging = false;
-      track.classList.remove("is-dragging");
-      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
-
-      // Leve inércia ao soltar.
-      if (Math.abs(velocity) > 1) animateTo(target - velocity * 8);
-    }
-
-    track.addEventListener("pointerup", endDrag);
-    track.addEventListener("pointercancel", endDrag);
 
     // Mantém o alvo sincronizado quando o scroll vem de swipe/teclado.
     track.addEventListener(
       "scroll",
       () => {
-        if (rafId === null && !isDragging) target = track.scrollLeft;
+        if (!tween || !tween.isActive()) target = track.scrollLeft;
       },
       { passive: true }
     );
