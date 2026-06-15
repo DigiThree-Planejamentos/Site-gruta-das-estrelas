@@ -48,7 +48,7 @@
 
       <nav class="main-nav" aria-label="Menu principal" data-nav>
         <a href="#sobre">Sobre</a>
-        <a href="#suites">Pacotes</a>
+        <a href="#pacotes">Pacotes</a>
         <a href="#restaurante">Restaurante</a>
         <a href="#contato">Dúvidas</a>
       </nav>
@@ -327,55 +327,58 @@
         </div>
       </section>
 
-      <section class="section lead-section" id="contato">
-        <div class="section-inner form-grid">
+      <section class="section packages-section" id="pacotes">
+        <div class="section-inner">
+          <span class="section-anchor" id="contato" aria-hidden="true"></span>
           <div class="section-header">
-            <p class="section-eyebrow">Reservas e informações</p>
-            <h2 class="section-title">Vamos preparar sua experiência?</h2>
+            <p class="section-eyebrow">PACOTES</p>
+            <h2 class="section-title">Experiências para viver a Gruta com mais calma</h2>
             <p class="section-description">
-              Conte o que você procura e a nossa equipe responde rapidamente pelo WhatsApp para organizar tudo com você.
+              Escolha a experiência ideal e fale com nossa equipe para consultar datas, condições e disponibilidade.
             </p>
           </div>
 
-          <form class="lead-form" data-lead-form novalidate>
-            <div class="form-status" data-form-status aria-live="polite"></div>
-            <label>
-              Nome*
-              <input type="text" name="name" autocomplete="name" required />
-            </label>
-            <label>
-              WhatsApp*
-              <input type="tel" name="phone" autocomplete="tel" required />
-            </label>
-            <label>
-              E-mail
-              <input type="email" name="email" autocomplete="email" />
-            </label>
-            <label>
-              Tipo de interesse*
-              <select name="interest_type" required>
-                <option value="">Selecione</option>
-                <option value="Suítes">Suítes</option>
-                <option value="Restaurante">Restaurante</option>
-                <option value="Evento">Evento</option>
-                <option value="Transfer">Transfer</option>
-                <option value="Outro">Outro</option>
-              </select>
-            </label>
-            <label>
-              Data desejada
-              <input type="date" name="desired_date" />
-            </label>
-            <label>
-              Número de pessoas
-              <input type="number" name="people_count" min="1" step="1" />
-            </label>
-            <label class="form-full">
-              Mensagem
-              <textarea name="message" rows="5" placeholder="Conte se procura suíte, restaurante, evento, transfer ou chegada de barco."></textarea>
-            </label>
-            <button class="btn btn-primary form-full" type="submit">Enviar e abrir WhatsApp</button>
-          </form>
+          <div class="packages-grid">
+            <article class="package-card package-reveal">
+              <img src="assets/img/gruta-suite.jpg" alt="Suíte e café da manhã na Gruta das Estrelas" width="1280" height="1707" loading="lazy" decoding="async" />
+              <div class="package-card__content">
+                <h3 class="card-title">Diária na Gruta</h3>
+                <p>
+                  Uma experiência para descansar, aproveitar o Saco do Céu e viver a Ilha Grande com tranquilidade.
+                </p>
+                <ul class="package-card__items">
+                  <li>Hospedagem em suíte</li>
+                  <li>Café da manhã incluso</li>
+                  <li>Acesso à estrutura da Gruta</li>
+                  <li>Consulte disponibilidade</li>
+                </ul>
+                <div class="package-card__footer">
+                  <span>Consulte valores</span>
+                  <a class="btn btn-primary" href="#" data-whatsapp-link data-message="Olá! Gostaria de consultar a disponibilidade da Diária na Gruta.">Consultar disponibilidade</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="package-card package-reveal package-reveal--delay">
+              <img src="assets/img/gruta-localizacao.jpg" alt="Deck e vista da Gruta das Estrelas no Saco do Céu" width="1280" height="1707" loading="lazy" decoding="async" />
+              <div class="package-card__content">
+                <h3 class="card-title">Fim de semana na Gruta</h3>
+                <p>
+                  Uma experiência completa para desacelerar, aproveitar a gastronomia e viver dias especiais à beira-mar.
+                </p>
+                <ul class="package-card__items">
+                  <li>Hospedagem em suíte</li>
+                  <li>Café da manhã incluso</li>
+                  <li>Acesso à estrutura da Gruta</li>
+                  <li>Condições especiais para o fim de semana</li>
+                </ul>
+                <div class="package-card__footer">
+                  <span>Consulte valores</span>
+                  <a class="btn btn-primary" href="#" data-whatsapp-link data-message="Olá! Gostaria de consultar a disponibilidade do pacote Fim de semana na Gruta.">Consultar disponibilidade</a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
