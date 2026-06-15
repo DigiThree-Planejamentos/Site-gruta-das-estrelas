@@ -365,6 +365,7 @@
     if (!carousel) return;
 
     const track = carousel.querySelector("[data-gallery-track]");
+    const prevButton = carousel.querySelector("[data-gallery-prev]");
     const nextButton = carousel.querySelector("[data-gallery-next]");
     const dotsContainer = carousel.querySelector("[data-gallery-dots]");
     const slides = track ? Array.from(track.querySelectorAll("img")) : [];
@@ -399,6 +400,10 @@
         dot.addEventListener("click", () => goTo(index));
         dotsContainer.appendChild(dot);
       });
+    }
+
+    if (prevButton) {
+      prevButton.addEventListener("click", () => goTo(activeIndex - 1));
     }
 
     if (nextButton) {

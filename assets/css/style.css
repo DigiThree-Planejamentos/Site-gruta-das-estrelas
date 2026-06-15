@@ -1445,10 +1445,10 @@ textarea {
   display: block;
 }
 
+.gallery-carousel__control,
 .gallery-carousel__next {
   position: absolute;
   top: 50%;
-  right: clamp(10px, 2vw, 18px);
   display: grid;
   place-items: center;
   width: 52px;
@@ -1466,6 +1466,16 @@ textarea {
   transition: background 180ms ease, transform 180ms ease;
 }
 
+.gallery-carousel__control--prev {
+  left: clamp(10px, 2vw, 18px);
+}
+
+.gallery-carousel__next {
+  right: clamp(10px, 2vw, 18px);
+}
+
+.gallery-carousel__control:hover,
+.gallery-carousel__control:focus-visible,
 .gallery-carousel__next:hover,
 .gallery-carousel__next:focus-visible {
   outline: none;
