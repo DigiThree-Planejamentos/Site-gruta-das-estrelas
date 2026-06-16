@@ -387,6 +387,8 @@
     const track = shell.querySelector(".structure-grid");
     if (!track) return;
 
+    const prevButton = shell.querySelector("[data-structure-prev]");
+    const nextButton = shell.querySelector("[data-structure-next]");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const gsap = window.gsap;
 
@@ -401,12 +403,36 @@
     let target = track.scrollLeft;
     let tween = null;
 
+    function scrollStep() {
+      const firstItem = track.querySelector(".structure-item");
+      if (!firstItem) return track.clientWidth * 0.8;
+
+      const styles = window.getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+      return firstItem.getBoundingClientRect().width + gap;
+    }
+
+    function updateControls() {
+      const max = maxScroll();
+      const left = tween && tween.isActive() ? target : track.scrollLeft;
+      const hasOverflow = max > 1;
+
+      if (prevButton) {
+        prevButton.disabled = !hasOverflow || left <= 1;
+      }
+
+      if (nextButton) {
+        nextButton.disabled = !hasOverflow || left >= max - 1;
+      }
+    }
+
     function animateTo(value) {
       target = clamp(value);
 
       if (!gsap || reduceMotion) {
         if (tween) tween.kill();
         track.scrollLeft = target;
+        updateControls();
         return;
       }
 
@@ -415,7 +441,24 @@
         scrollLeft: target,
         duration: 0.6,
         ease: "power3.out",
-        overwrite: true
+        overwrite: true,
+        onUpdate: updateControls,
+        onComplete: updateControls
+      });
+      updateControls();
+    }
+
+    if (prevButton) {
+      prevButton.addEventListener("click", () => {
+        const base = tween && tween.isActive() ? target : track.scrollLeft;
+        animateTo(base - scrollStep());
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener("click", () => {
+        const base = tween && tween.isActive() ? target : track.scrollLeft;
+        animateTo(base + scrollStep());
       });
     }
 
@@ -447,13 +490,17 @@
       "scroll",
       () => {
         if (!tween || !tween.isActive()) target = track.scrollLeft;
+        updateControls();
       },
       { passive: true }
     );
 
     window.addEventListener("resize", () => {
       target = clamp(target);
+      updateControls();
     });
+
+    updateControls();
   }
 
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
