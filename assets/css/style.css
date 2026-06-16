@@ -1812,8 +1812,38 @@ textarea {
   color: rgba(255, 255, 255, 0.82);
 }
 
-.final-cta .btn {
+.final-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
   margin-top: 12px;
+}
+
+.btn__icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.btn__icon rect,
+.btn__icon circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.btn__icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btn__icon--whatsapp path:last-child {
+  fill: currentColor;
+  stroke: none;
 }
 
 .final-cta .btn-primary {
@@ -1858,6 +1888,11 @@ textarea {
 
 .site-footer a:hover {
   color: #fff;
+}
+
+.footer-links {
+  display: grid;
+  gap: 7px;
 }
 
 .site-footer p {
