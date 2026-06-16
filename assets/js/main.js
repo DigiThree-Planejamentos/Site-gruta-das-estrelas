@@ -5,6 +5,14 @@
   const firstNavLink = nav ? nav.querySelector("a") : null;
   const headerWave = header ? header.querySelector(".header-wave") : null;
   const config = window.GRUTA_CONFIG || {};
+  const suitePrices = window.GRUTA_SUITE_PRICES || [
+    { name: "Brisa do Mar", price: "Sob consulta" },
+    { name: "Canto dos Caranguejos", price: "Sob consulta" },
+    { name: "Horizonte Verde", price: "Sob consulta" },
+    { name: "Céu da Ilha", price: "Sob consulta" },
+    { name: "Flor da Ilha", price: "Sob consulta" },
+    { name: "Florescer", price: "Sob consulta" }
+  ];
 
   function updateHeaderWave() {
     if (!headerWave || !firstNavLink) return;
@@ -380,6 +388,52 @@
     render();
   }
 
+  function setupPackagePrices() {
+    document.querySelectorAll("[data-package-prices]").forEach((trigger) => {
+      const card = trigger.closest(".package-card");
+      const panel = card ? card.querySelector("[data-package-prices-panel]") : null;
+      if (!panel) return;
+
+      function renderPanel() {
+        if (panel.childElementCount > 0) return;
+
+        const title = document.createElement("p");
+        title.className = "package-prices__title";
+        title.textContent = "Valores das suítes";
+
+        const list = document.createElement("ul");
+        list.className = "package-prices__list";
+
+        suitePrices.forEach((suite) => {
+          const item = document.createElement("li");
+          item.className = "package-prices__item";
+
+          const name = document.createElement("strong");
+          name.textContent = suite.name;
+
+          const price = document.createElement("span");
+          price.textContent = suite.price;
+
+          item.append(name, price);
+          list.appendChild(item);
+        });
+
+        const note = document.createElement("p");
+        note.className = "package-prices__note";
+        note.textContent = "Valores sujeitos a disponibilidade, temporada e quantidade de pessoas.";
+
+        panel.append(title, list, note);
+      }
+
+      trigger.addEventListener("click", () => {
+        const isOpen = trigger.getAttribute("aria-expanded") === "true";
+        renderPanel();
+        trigger.setAttribute("aria-expanded", String(!isOpen));
+        panel.hidden = isOpen;
+      });
+    });
+  }
+
   function setupExperienceScroller() {
     const shell = document.querySelector(".structure-carousel-shell");
     if (!shell) return;
@@ -518,6 +572,7 @@
   setupExperienceCarousels();
   setupExperienceScroller();
   setupGalleryCarousel();
+  setupPackagePrices();
 
   window.addEventListener("scroll", updateHeader, { passive: true });
   window.addEventListener("resize", updateHeaderWave);
