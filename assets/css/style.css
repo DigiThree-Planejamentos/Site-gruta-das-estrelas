@@ -2296,10 +2296,15 @@ textarea {
     white-space: normal;
   }
 
+  .hero {
+    align-items: center;
+  }
+
   .hero-content {
     width: min(100% - 34px, 520px);
-    padding-top: 104px;
-    padding-bottom: 64px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform: translateY(-7svh);
   }
 
   .hero h1 {
@@ -2316,7 +2321,7 @@ textarea {
 
   .hero-actions {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 12px;
     margin-top: 24px;
     width: min(100%, 280px);
