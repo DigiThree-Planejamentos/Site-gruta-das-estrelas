@@ -51,7 +51,10 @@
       profile: "Aconchegante",
       description: "Suíte acolhedora para quem quer acordar perto da brisa e do ritmo calmo da Ilha Grande.",
       attributes: ["Vista para o ambiente natural", "Café da manhã incluso", "Banheiro privativo", "Ideal para casal"],
-      image: "assets/img/suite-brisa-do-mar-placeholder.svg",
+      images: [
+        "assets/img/suites/brisa-do-mar-1.jpg",
+        "assets/img/suites/brisa-do-mar-2.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Brisa do Mar."
     },
     {
@@ -59,7 +62,9 @@
       profile: "Próxima à natureza",
       description: "Uma opção charmosa para descansar depois de um dia de mar, trilhas e gastronomia.",
       attributes: ["Ambiente aconchegante", "Café da manhã incluso", "Banheiro privativo", "Próxima à natureza"],
-      image: "assets/img/suite-canto-dos-caranguejos-placeholder.svg",
+      images: [
+        "assets/img/suites/canto-dos-caranguejos-1.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Canto dos Caranguejos."
     },
     {
@@ -67,7 +72,11 @@
       profile: "Vista para o verde",
       description: "Suíte para contemplar a mata e aproveitar uma estadia tranquila no Saco do Céu.",
       attributes: ["Vista para o verde", "Café da manhã incluso", "Banheiro privativo", "Atmosfera relaxante"],
-      image: "assets/img/suite-horizonte-verde-placeholder.svg",
+      images: [
+        "assets/img/suites/horizonte-verde-1.jpg",
+        "assets/img/suites/horizonte-verde-2.jpg",
+        "assets/img/suites/horizonte-verde-3.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Horizonte Verde."
     },
     {
@@ -75,7 +84,10 @@
       profile: "Intimista",
       description: "Hospedagem pensada para dias especiais, com atmosfera intimista e contato com a natureza.",
       attributes: ["Ambiente reservado", "Café da manhã incluso", "Banheiro privativo", "Ideal para descanso"],
-      image: "assets/img/suite-ceu-da-ilha-placeholder.svg",
+      images: [
+        "assets/img/suites/ceu-da-ilha-1.jpg",
+        "assets/img/suites/ceu-da-ilha-2.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Céu da Ilha."
     },
     {
@@ -83,7 +95,10 @@
       profile: "Confortável",
       description: "Suíte leve e confortável para relaxar com praticidade durante a estadia na Ilha Grande.",
       attributes: ["Conforto", "Wi-Fi", "Café da manhã incluso", "Banheiro privativo"],
-      image: "assets/img/suite-flor-da-ilha-placeholder.svg",
+      images: [
+        "assets/img/suites/flor-da-ilha-2.jpg",
+        "assets/img/suites/flor-da-ilha-3.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Flor da Ilha."
     },
     {
@@ -91,7 +106,11 @@
       profile: "Privativa",
       description: "Uma suíte para quem procura descanso, privacidade e dias de conexão com a ilha.",
       attributes: ["Privacidade", "Café da manhã incluso", "Ar-condicionado", "Banheiro privativo"],
-      image: "assets/img/suite-florescer-placeholder.svg",
+      images: [
+        "assets/img/suites/florescer-1.jpg",
+        "assets/img/suites/florescer-2.jpg",
+        "assets/img/suites/florescer-3.jpg"
+      ],
       whatsappMessage: "Olá! Quero consultar disponibilidade da suíte Florescer."
     }
   ];
@@ -103,6 +122,8 @@
     const list = explorer.querySelector("[data-suite-list]");
     const panel = explorer.querySelector("[data-suite-panel]");
     const image = explorer.querySelector("[data-suite-image]");
+    const imagePrev = explorer.querySelector("[data-suite-image-prev]");
+    const imageNext = explorer.querySelector("[data-suite-image-next]");
     const name = explorer.querySelector("[data-suite-name]");
     const description = explorer.querySelector("[data-suite-description]");
     const attributes = explorer.querySelector("[data-suite-attributes]");
@@ -111,19 +132,51 @@
     if (!list || !panel || !image || !name || !description || !attributes || !cta) return;
 
     let activeIndex = 0;
+    let activeImageIndex = 0;
+
+    function suiteImages(suite) {
+      return suite.images || [suite.image];
+    }
+
+    function renderSuiteImage() {
+      const suite = suites[activeIndex];
+      if (!suite) return;
+
+      const images = suiteImages(suite);
+      const imageSrc = images[activeImageIndex] || images[0];
+
+      image.src = imageSrc;
+      image.alt = `Foto ${activeImageIndex + 1} da suíte ${suite.name}`;
+
+      const hasMultipleImages = images.length > 1;
+      if (imagePrev) imagePrev.hidden = !hasMultipleImages;
+      if (imageNext) imageNext.hidden = !hasMultipleImages;
+    }
+
+    function goToSuiteImage(direction) {
+      const suite = suites[activeIndex];
+      if (!suite) return;
+
+      const images = suiteImages(suite);
+      if (images.length < 2) return;
+
+      activeImageIndex = (activeImageIndex + direction + images.length) % images.length;
+      renderSuiteImage();
+    }
+
     function renderSuite(index, animate = true) {
       const suite = suites[index];
       if (!suite) return;
 
       activeIndex = index;
+      activeImageIndex = 0;
 
       if (animate) {
         panel.classList.remove("is-sliding-in");
         void panel.offsetWidth;
       }
 
-      image.src = suite.image;
-      image.alt = `Placeholder da suíte ${suite.name}`;
+      renderSuiteImage();
       name.textContent = suite.name;
       description.textContent = suite.description;
       attributes.replaceChildren(
@@ -191,6 +244,14 @@
     });
 
     renderSuite(0, false);
+
+    if (imagePrev) {
+      imagePrev.addEventListener("click", () => goToSuiteImage(-1));
+    }
+
+    if (imageNext) {
+      imageNext.addEventListener("click", () => goToSuiteImage(1));
+    }
   }
 
   function setupSuiteReveal() {
