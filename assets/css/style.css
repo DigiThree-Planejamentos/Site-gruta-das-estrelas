@@ -2322,7 +2322,7 @@ textarea {
     width: min(100% - 34px, 520px);
     padding-top: 0;
     padding-bottom: 0;
-    transform: translateY(-17svh);
+    transform: translateY(-12svh);
   }
 
   .hero h1 {
