@@ -4,7 +4,7 @@ const SUPABASE_URL = "https://essoicjbsshlqvzqcrsw.supabase.co/rest/v1/";
 const SUPABASE_ANON_KEY = "sb_publishable_2WQu7dIOdX5hOyHShn1LrQ_DJrYfSvY";
 const CLIENT_ID = "be67a108-32a4-4bd6-82a1-ac71f1b7232e";
 const CLIENT_SLUG = "gruta-das-estrelas";
-const WHATSAPP_NUMBER = "5524992626383";
+const WHATSAPP_NUMBER = "5524993056663";
 
 window.GRUTA_CONFIG = {
   SUPABASE_URL,

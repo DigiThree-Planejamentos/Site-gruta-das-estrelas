@@ -121,7 +121,7 @@ assets/js/supabase.js
 Edite:
 
 ```js
-const WHATSAPP_NUMBER = "5524992626383";
+const WHATSAPP_NUMBER = "5524993056663";
 ```
 
 Use o número com código do país e DDD, sem espaços, parênteses ou sinais.
@@ -135,7 +135,7 @@ Formato:
 Exemplo:
 
 ```js
-const WHATSAPP_NUMBER = "5524992626383";
+const WHATSAPP_NUMBER = "5524993056663";
 ```
 
 ## 6. Leads no Supabase
