@@ -714,7 +714,7 @@ textarea {
   position: relative;
   min-height: 100svh;
   display: grid;
-  align-items: end;
+  align-items: center;
   overflow: hidden;
   color: #fff;
 }
@@ -746,7 +746,7 @@ textarea {
   justify-items: center;
   width: min(760px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 150px 0 clamp(230px, 31vh, 340px);
+  padding: 0;
   text-align: center;
 }
 
@@ -2267,8 +2267,7 @@ textarea {
 
   .hero-content {
     width: min(100% - 42px, 720px);
-    padding-top: 132px;
-    padding-bottom: 72px;
+    padding: 0;
   }
 
   .gallery-grid {
@@ -2321,6 +2320,22 @@ textarea {
   }
 }
 
+@media (min-width: 641px) and (max-width: 1199px) and (orientation: landscape) {
+  .hero-media {
+    display: none;
+  }
+
+  .hero-mobile-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --container-pad: 16px;
@@ -2368,9 +2383,8 @@ textarea {
 
   .hero-content {
     width: min(100% - 34px, 520px);
-    padding-top: 0;
-    padding-bottom: 0;
-    transform: translateY(-7svh);
+    padding: 0;
+    transform: none;
   }
 
   .hero h1 {
